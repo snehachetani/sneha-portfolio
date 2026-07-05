@@ -1,0 +1,45 @@
+---
+const { project } = Astro.props;
+---
+
+<a
+  href={project.link}
+  class="group relative block overflow-hidden rounded-lg p-5 transition hover:bg-slate-900/70"
+>
+  <div class="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+    <div class="absolute -inset-px bg-[radial-gradient(600px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(34,211,238,0.12),transparent_40%)]"></div>
+  </div>
+
+  <div class="relative z-10">
+    <h3 class="font-medium text-slate-100 group-hover:text-emerald-300">
+      {project.title}
+    </h3>
+
+    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+      {project.description}
+    </p>
+
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {project.tags.map((tag: string) => (
+        <li class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
+          {tag}
+        </li>
+      ))}
+    </ul>
+  </div>
+</a>
+
+<script>
+  const cards = document.querySelectorAll(".group");
+
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+    });
+  });
+</script>

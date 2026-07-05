@@ -1,0 +1,79 @@
+---
+type ExperienceItem = {
+  period: string;
+  role: string;
+  company: string;
+  companyLink?: string;
+  workLabel?: string;
+  workLink?: string;
+  description: string;
+  tags: string[];
+};
+
+const { item } = Astro.props as { item: ExperienceItem };
+---
+
+<div class="group grid gap-4 rounded-lg p-5 transition hover:bg-slate-900/70 sm:grid-cols-4">
+  <div class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+    {item.period}
+  </div>
+
+  <div class="sm:col-span-3">
+    <h3 class="font-medium text-slate-100 group-hover:text-emerald-300">
+      <span>{item.role}</span>
+      <span> · </span>
+
+      {
+        item.companyLink ? (
+          <a
+            href={item.companyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 transition hover:text-emerald-300"
+          >
+            {item.company}
+            <span
+              aria-hidden="true"
+              class="text-xs transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            >
+              ↗
+            </span>
+          </a>
+        ) : (
+          <span>{item.company}</span>
+        )
+      }
+    </h3>
+
+    {
+      item.workLabel && item.workLink && (
+        <a
+          href={item.workLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-emerald-300/90 transition hover:text-emerald-200"
+        >
+          {item.workLabel}
+          <span
+            aria-hidden="true"
+            class="text-xs transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          >
+            ↗
+          </span>
+        </a>
+      )
+    }
+
+    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+      {item.description}
+    </p>
+
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {item.tags.map((tag: string) => (
+        <li class="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
+          {tag}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

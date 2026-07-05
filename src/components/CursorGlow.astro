@@ -1,0 +1,38 @@
+<div
+  id="cursor-glow"
+  aria-hidden="true"
+  class="pointer-events-none fixed left-0 top-0 z-0 hidden h-[420px] w-[420px] rounded-full bg-emerald-400/20 blur-[120px] lg:block"
+></div>
+
+<script>
+  const glow = document.getElementById("cursor-glow");
+
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (glow && hasFinePointer && !prefersReducedMotion) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let glowX = mouseX;
+    let glowY = mouseY;
+
+    window.addEventListener("mousemove", (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    });
+
+    function animateGlow() {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+
+      glow.style.transform = `translate3d(${glowX - 210}px, ${glowY - 210}px, 0)`;
+
+      requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+  }
+</script>
