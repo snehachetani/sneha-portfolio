@@ -1,11 +1,98 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Section from "../components/Section.astro";
+import ExperienceCard from "../components/ExperienceCard.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { experience } from "../data/experience";
+import { projects } from "../data/projects";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <div class="lg:flex lg:justify-between lg:gap-10">
+    <Sidebar />
+
+    <div class="pt-24 lg:w-1/2 lg:py-24">
+      <Section id="about" title="About">
+        <div class="space-y-4 leading-relaxed text-slate-400">
+          <p>
+			<span class="text-4xl font-semibold tracking-tight text-emerald-300 sm:text-4xl">
+				Hi!
+			</span>{" "}
+
+			I'm an AI/ML Engineer with a background in statistics. I like to start with basic questions:
+			what is being measured, what is being assumed, and where does the model become overconfident?
+		  </p>
+
+          <p>
+            During my master’s at Saarland University, I studied temperature-scaled surprisal and eye-tracking data.
+            The question was simple on the surface: can softened model probabilities explain human reading times better?
+            The harder part was tokenization. Once a word is split into subwords, the signal changes depending on where the subword sits.
+            A preprocessing step suddenly becomes part of the interpretation.
+          </p>
+
+          <p>
+            I have worked across research and engineering: arithmetic reasoning in language models,
+			robust learning under distribution shifts, neural policy verification, recommender systems,
+			forecasting, and AI workflows inside production software.
+          </p>
+		  <p>
+		  	I like the space between a clean research question and a system people can actually use.
+			That space is usually where the interesting problems appear.
+		  </p>
+        </div>
+      </Section>
+
+      <Section id="experience" title="Experience">
+        <div class="space-y-4">
+          {experience.map((item) => (
+            <ExperienceCard item={item} />
+          ))}
+        </div>
+      </Section>
+
+      <Section id="projects" title="Projects">
+        <div class="space-y-4">
+          {projects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </Section>
+
+      <Section id="writing" title="Writing">
+        <div class="rounded-lg p-5 transition hover:bg-slate-900/70">
+          <h3 class="font-medium text-slate-100">
+            VisionRAG from Scratch
+          </h3>
+
+          <p class="mt-2 text-sm leading-relaxed text-slate-400">
+            A technical article about implementing VisionRAG using visual document retrieval instead of only OCR-based text extraction.
+          </p>
+
+          <a class="mt-4 inline-block text-sm font-medium text-emerald-300 hover:text-emerald-200" href="#">
+            Read article →
+          </a>
+        </div>
+      </Section>
+
+      <Section id="contact" title="Contact">
+		<div class="rounded-lg border border-slate-800/80 bg-slate-900/30 p-6">
+    		<h3 class="text-lg font-medium text-slate-100">
+				I am open to ML engineering and research-facing roles.
+			</h3>
+			<p class="mt-3 leading-relaxed text-slate-400">
+				Email is the easiest way to reach me.
+			</p>
+
+        <a
+			href="mailto:snehachetani45@gmail.com"
+			class="mt-6 inline-block rounded-md border border-emerald-300 px-5 py-3 text-sm font-medium text-emerald-300 hover:bg-emerald-300/10"
+		>
+		Get in touch
+		</a>
+		</div>
+      </Section>
+    </div>
+  </div>
+</BaseLayout>
